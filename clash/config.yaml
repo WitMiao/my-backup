@@ -230,10 +230,9 @@ rules:
   # 介绍一下如何配置
   # 匹配规则,分组,规则 例如下面这个
   # [域名匹配],[linux.do],[直连]
-  - DOMAIN-SUFFIX,grok.com,手动选择
-  - DOMAIN-SUFFIX,windows.net,手动选择
+  # - DOMAIN-SUFFIX,windows.net,手动选择
   # [进程匹配],[进程名称],[规则]
-  - PROCESS-NAME,prl_naptd,漏网之鱼
+  # - PROCESS-NAME,prl_naptd,漏网之鱼
   # [规则匹配],[规则集],[规则],[不解析]  这里不使用GEOIP,private，是因为我测试下来感觉使用GEO会让clash内存变高所以就没使用了
   - RULE-SET,Lan,直连,no-resolve
   - RULE-SET,DNSLeak,手动选择
