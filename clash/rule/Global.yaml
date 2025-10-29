@@ -74,3 +74,4 @@ payload:
   - DOMAIN-SUFFIX,spring.net
   - DOMAIN-SUFFIX,stackoverflow.com
   - DOMAIN-SUFFIX,unpkg.com
+  - DOMAIN-SUFFIX,immortalwrt.org
