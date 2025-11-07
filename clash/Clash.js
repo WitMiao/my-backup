@@ -468,23 +468,27 @@ const ruleProviders = {
     "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub_No_Resolve.yaml",
     "path": "./ruleset/Github.yaml"
   },
+  "Global": {
+    ...ruleProviderCommon,
+    "behavior": "classical",
+    "url": "https://cdn.jsdelivr.net/gh/wanswu/my-backup@master/clash/rule/Global.yaml",
+    "path": "./ruleset/Global.yaml"
+  },
+  "ChinaCustom": {
+    ...ruleProviderCommon,
+    "behavior": "classical",
+    "url": "https://cdn.jsdelivr.net/gh/wanswu/my-backup@master/clash/rule/ChinaCustom.yaml",
+    "path": "./ruleset/ChinaCustom.yaml"
+  },
 };
 
 // 规则
 const rules = [
   // 自定义规则
-  'GEOIP,private,DIRECT',
-  'GEOIP,CN,DIRECT',
-  'DOMAIN-SUFFIX,yunaq.com,DIRECT',
-  'DOMAIN-SUFFIX,jiashule.com,DIRECT',
-  'DOMAIN-SUFFIX,linux.do,DIRECT',
-  'DOMAIN-SUFFIX,deepseek.com,DIRECT',
-  'DOMAIN-SUFFIX,volces.com,DIRECT',
-  'DOMAIN-SUFFIX,portal101.cn,DIRECT',
-  'DOMAIN-SUFFIX,ephone.ai,DIRECT',
-  'DOMAIN-SUFFIX,pcbeta.com,DIRECT',
   "RULE-SET,Telegram,Telegram",
   "RULE-SET,YouTube,YouTube",
+  "RULE-SET,Global,AUTO",
+  "RULE-SET,ChinaCustom,DIRECT",
   "RULE-SET,BiliBili,BiliBili",
   "RULE-SET,TikTok,TikTok",
   "RULE-SET,Spotify,Spotify",
