@@ -240,6 +240,7 @@ rules:
   - RULE-SET,Telegram,Telegram
   - RULE-SET,Gemini,Gemini
   - RULE-SET,Google,Google
+  - RULE-SET,Global,手动选择
   - RULE-SET,Github,Github
   - RULE-SET,YouTube,YouTube
   - RULE-SET,BiliBili,BiliBili
