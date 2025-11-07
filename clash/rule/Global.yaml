@@ -3,9 +3,6 @@
 # REPO: https://github.com/wanswu/my-backup
 # DATE: 2025/09/09
 payload:
-  - DOMAIN-SUFFIX,linux.do
-  - DOMAIN-SUFFIX,idcflare.com
-  - DOMAIN-SUFFIX,grok.com
   - DOMAIN-SUFFIX,windows.net
   - DOMAIN-SUFFIX,apple-cloudkit.com
   - DOMAIN-SUFFIX,apple-mapkit.com
@@ -78,3 +75,6 @@ payload:
   - DOMAIN-SUFFIX,unpkg.com
   - DOMAIN-SUFFIX,immortalwrt.org
   - DOMAIN-SUFFIX,appstorrent.ru
+  - DOMAIN-SUFFIX,linux.do
+  - DOMAIN-SUFFIX,idcflare.com
+  - DOMAIN-SUFFIX,grok.com
