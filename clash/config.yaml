@@ -1,5 +1,5 @@
 # 订阅锚点，排除了一些节点，例如 包含剩余，官网，到期，也可以在exclude-filter添加你需要排除的节点
-Providers: &Providers { exclude-filter: "Expire|到期|剩余|Traffic", type: http, interval: 86400, health-check: { enable: true, url: https://www.gstatic.com/generate_204, interval: 300 } }
+Providers: &Providers { exclude-filter: "Expire|到期|剩余|Traffic|网址|官网|过期", type: http, interval: 86400, health-check: { enable: true, url: https://www.gstatic.com/generate_204, interval: 300 } }
 # 官方配置文档: https://wiki.metacubex.one/config/proxy-providers/
 proxy-providers:
   p1:
@@ -15,8 +15,6 @@ proxy-providers:
     path: ./proxy_provider/p2.yaml
     override:
       additional-prefix: 'p2 | '
-
-
 
 # dns配置
 dns:
@@ -145,7 +143,7 @@ SelectTW: &SelectTW { type: select, proxies: [ 台湾, 手动选择, 香港, 澳
 SelectDirect: &SelectDirect { type: select, proxies: [ DIRECT, REJECT, 手动选择, 香港, 澳门, 台湾, 日本, 韩国, 美国, 英国, 德国, 法国, 印度, 新加坡, 印尼, 越南, 泰国, 澳洲, 巴西, 其他, REJECT ], disable-udp: false }
 SelectProxy: &SelectProxy { type: select, proxies: [ 手动选择, 香港, 澳门, 台湾, 日本, 韩国, 美国, 英国, 德国, 法国, 印度, 新加坡, 印尼, 越南, 泰国, 澳洲, 巴西, 其他, DIRECT, REJECT ], disable-udp: false }
 # hidden: true 是为了隐藏地区分组，有需要显示出来的佬友可以删除
-UrlTest: &UrlTest { type: url-test, interval: 300, tolerance: 50, url: 'https://www.gstatic.com/generate_204', hidden: true, include-all: true, disable-udp: false }
+UrlTest: &UrlTest { type: url-test, interval: 300, tolerance: 50, url: 'https://www.gstatic.com/generate_204', hidden: false, include-all: true, disable-udp: false }
 Fallback: &Fallback { type: fallback, interval: 300, tolerance: 50, url: 'https://www.gstatic.com/generate_204', hidden: true, include-all: true, disable-udp: false }
 
 # 代理组
@@ -155,7 +153,7 @@ proxy-groups:
     - { name: GLOBAL, <<: *SelectDirect, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png, include-all: true }
     - { name: Apple, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png }
     - { name: BiliBili, <<: *SelectDirect, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/bilibili_4.png }
-    - { name: Claude, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/wanswu/my-backup@main/IconSet/AI/Claude.png }
+    - { name: Claude, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/lobehub/lobe-icons@master/packages/static-png/light/claude-color.png }
     - { name: Disney, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Disney.png }
     - { name: Emby, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Emby.png }
     - { name: Gemini, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/guaishouxiaoqi/icons@master/Color/Gemini.png }
@@ -163,7 +161,7 @@ proxy-groups:
     - { name: Google, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png }
     - { name: Microsoft, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png }
     - { name: Netflix, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png }
-    - { name: OpenAI, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png }
+    - { name: OpenAI, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/lobehub/lobe-icons@master/packages/static-png/light/openai.png }
     - { name: OneDrive, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/OneDrive.png }
     - { name: Steam, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Steam.png }
     - { name: Spotify, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png }
@@ -174,22 +172,25 @@ proxy-groups:
     - { name: 漏网之鱼, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Final.png }
     - { name: 直连, <<: *SelectDirect, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png, hidden: true }
     # 这里只匹配了一些常用地区的分组
-    - { name: 香港, <<: *UrlTest, filter: 🇭🇰|香港|港|HK|hongkong|hong kong, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png }
+    - { name: 香港, <<: *UrlTest, filter: 🇭🇰|香港|港|HK|HKG|Hong Kong|hong kong|hongkong, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png }
     - { name: 澳门, <<: *UrlTest, filter: 🇲🇴|澳门|门|MO|macao, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Macao.png }
-    - { name: 台湾, <<: *UrlTest, filter: 🇹🇼|台湾|台|TW|taiwan|taipei, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png }
-    - { name: 日本, <<: *UrlTest, filter: 🇯🇵|日本|JP|japan|tokyo|osaka, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png }
-    - { name: 韩国, <<: *UrlTest, filter: 🇰🇷|韩国|韩|KR|korea|seoul, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png }
-    - { name: 美国, <<: *UrlTest, filter: 🇺🇸|美国|美|US|united states|america|los angeles|san jose|silicon valley, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png }
-    - { name: 英国, <<: *UrlTest, filter: 🇬🇧|英国|英|UK|united kingdom|london, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_Kingdom.png }
-    - { name: 德国, <<: *UrlTest, filter: 🇩🇪|德国|德|DE|germany|frankfurt, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Germany.png }
+    - { name: 台湾, <<: *UrlTest, filter: 🇹🇼|台湾|台|TW|TWN|Taiwan|taiwan|taipei, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png }
+    - { name: 日本, <<: *UrlTest, filter: 🇯🇵|日本|JP|JPN|Japan|japan|tokyo|osaka, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png }
+    - { name: 韩国, <<: *UrlTest, filter: 🇰🇷|韩国|韩|KR|KOR|korea|seoul, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png }
+    - { name: 美国, <<: *UrlTest, filter: 🇺🇸|美国|美|US|USA|united states|america|los angeles|san jose|silicon valley, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png }
+    - { name: 英国, <<: *UrlTest, filter: 🇬🇧|英国|英|GBR|UK|united kingdom|london, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_Kingdom.png }
+    - { name: 德国, <<: *UrlTest, filter: 🇩🇪|德国|德|DE|DEU|germany|frankfurt, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Germany.png }
     - { name: 法国, <<: *UrlTest, filter: 🇫🇷|法国|法|FR|france|paris, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/France.png }
-    - { name: 印度, <<: *UrlTest, filter: 🇮🇳|印度|IN|india|mumbai, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/France.png }
-    - { name: 新加坡, <<: *UrlTest, filter: 🇸🇬|新加坡|新|SG|singapore, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png }
+    - { name: 印度, <<: *UrlTest, filter: 🇮🇳|印度|IN|IND|india|mumbai, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/France.png }
     - { name: 印尼, <<: *UrlTest, filter: 🇮🇩|印尼|印度尼西亚|ID|indonesia|jakarta, icon: https://cdn.jsdelivr.net/gh/wanswu/my-backup@master/IconSet/Country/Indonesia.png }
     - { name: 越南, <<: *UrlTest, filter: 🇻🇳|越南|VN|vietnam, icon: https://cdn.jsdelivr.net/gh/wanswu/my-backup@master/IconSet/Country/Vietnam.png }
     - { name: 泰国, <<: *UrlTest, filter: 🇹🇭|泰国|TH|thailand|bangkok, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Thailand.png }
-    - { name: 澳洲, <<: *UrlTest, filter: 🇦🇺|澳大利亚|AU|australia|sydney, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Australia.png }
-    - { name: 巴西, <<: *UrlTest, filter: 🇧🇷|巴西|brazil, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Brazil.png }
+    - { name: 澳洲, <<: *UrlTest, filter: 🇦🇺|澳洲|澳大利亚|AU|AUS|australia|sydney, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Australia.png }
+    - { name: 巴西, <<: *UrlTest, filter: 🇧🇷|巴西|BRA|brazil, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Brazil.png }
+    - { name: 荷兰, <<: *UrlTest, filter: 🇳🇱|荷兰|NL|NLD, icon: https://cdn.jsdelivr.net/gh/wanswu/my-backup@master/IconSet/Country/Netherlands.png }
+    - { name: 土耳其, <<: *UrlTest, filter: 🇹🇷|土耳其|TUR|Turkey|turkey, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Turkey.png }
+    - { name: 阿根廷, <<: *UrlTest, filter: 🇦🇷|阿根廷|ARG|Argentina|argentina, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Argentina.png }
+    - { name: 新加坡, <<: *UrlTest, filter: 🇸🇬|新加坡|狮城|新|SG|SGP|Singapore|singapore, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png }
     # 除了常用的地区，其他地区都放这里
     - { name: 其他, <<: *UrlTest, filter: '(?i)^(?!.*(香港|台湾|日本|韩国|新加坡|美国|英国|德国|法国|印度|泰国|越南|印尼|澳大利亚|巴西|港|台|日|韩|新|美|英|德|法|印|泰|越|尼|澳|巴|hk|tw|jp|kr|sg|us|uk|de|fr|in|th|vn|id|au|br)).*', icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png }
 
