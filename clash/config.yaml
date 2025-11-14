@@ -182,12 +182,12 @@ proxy-groups:
     - { name: 德国, <<: *UrlTest, filter: 🇩🇪|德国|德|DE|DEU|germany|frankfurt, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Germany.png }
     - { name: 法国, <<: *UrlTest, filter: 🇫🇷|法国|法|FR|france|paris, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/France.png }
     - { name: 印度, <<: *UrlTest, filter: 🇮🇳|印度|IN|IND|india|mumbai, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/France.png }
-    - { name: 印尼, <<: *UrlTest, filter: 🇮🇩|印尼|印度尼西亚|ID|indonesia|jakarta, icon: https://cdn.jsdelivr.net/gh/wanswu/my-backup@master/IconSet/Country/Indonesia.png }
-    - { name: 越南, <<: *UrlTest, filter: 🇻🇳|越南|VN|vietnam, icon: https://cdn.jsdelivr.net/gh/wanswu/my-backup@master/IconSet/Country/Vietnam.png }
+    - { name: 印尼, <<: *UrlTest, filter: 🇮🇩|印尼|印度尼西亚|ID|indonesia|jakarta, icon: https://cdn.jsdelivr.net/gh/wanswu/my-backup@main/IconSet/Country/Indonesia.png }
+    - { name: 越南, <<: *UrlTest, filter: 🇻🇳|越南|VN|vietnam, icon: https://cdn.jsdelivr.net/gh/wanswu/my-backup@main/IconSet/Country/Vietnam.png }
     - { name: 泰国, <<: *UrlTest, filter: 🇹🇭|泰国|TH|thailand|bangkok, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Thailand.png }
     - { name: 澳洲, <<: *UrlTest, filter: 🇦🇺|澳洲|澳大利亚|AU|AUS|australia|sydney, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Australia.png }
     - { name: 巴西, <<: *UrlTest, filter: 🇧🇷|巴西|BRA|brazil, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Brazil.png }
-    - { name: 荷兰, <<: *UrlTest, filter: 🇳🇱|荷兰|NL|NLD, icon: https://cdn.jsdelivr.net/gh/wanswu/my-backup@master/IconSet/Country/Netherlands.png }
+    - { name: 荷兰, <<: *UrlTest, filter: 🇳🇱|荷兰|NL|NLD, icon: https://cdn.jsdelivr.net/gh/wanswu/my-backup@main/IconSet/Country/Netherlands.png }
     - { name: 土耳其, <<: *UrlTest, filter: 🇹🇷|土耳其|TUR|Turkey|turkey, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Turkey.png }
     - { name: 阿根廷, <<: *UrlTest, filter: 🇦🇷|阿根廷|ARG|Argentina|argentina, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Argentina.png }
     - { name: 新加坡, <<: *UrlTest, filter: 🇸🇬|新加坡|狮城|新|SG|SGP|Singapore|singapore, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png }
@@ -205,14 +205,14 @@ rule-providers:
     Apple: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical.yaml}
     BiliBili: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BiliBili/BiliBili.yaml }
     China: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/China/China_Classical_No_Resolve.yaml }
-    ChinaCustom: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/wanswu/my-backup@master/clash/rule/ChinaCustom.yaml }
+    ChinaCustom: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/wanswu/my-backup@main/clash/rule/ChinaCustom.yaml }
     Claude: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Claude/Claude.yaml }
     Disney: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Disney/Disney.yaml }
     Emby: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Emby/Emby.yaml }
     Gemini: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Gemini/Gemini.yaml }
     Github: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml }
     Google: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml }
-    Global: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/wanswu/my-backup@master/clash/rule/Global.yaml }
+    Global: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/wanswu/my-backup@main/clash/rule/Global.yaml }
     Hijacking: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Hijacking/Hijacking.yaml }
     Lan: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan_No_Resolve.yaml }
     Microsoft: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml }
@@ -226,7 +226,7 @@ rule-providers:
     Twitter: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Twitter/Twitter.yaml }
     Telegram: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram.yaml }
     YouTube: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTube/YouTube.yaml }
-    DNSLeak: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/wanswu/my-backup@master/clash/rule/DNSLeak.yaml }
+    DNSLeak: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/wanswu/my-backup@main/clash/rule/DNSLeak.yaml }
 
 # 官方配置文档: https://wiki.metacubex.one/config/rules/
 rules:
