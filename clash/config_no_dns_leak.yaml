@@ -72,7 +72,7 @@ dns:
     - https://dns.alidns.com/dns-query
 
 # GEO配置
-geodata-mode: true
+geodata-mode: false
 geo-auto-update: true
 geo-update-interval: 24
 geodata-loader: memconservative
@@ -153,8 +153,8 @@ proxy-groups:
   - { name: 手动选择, <<: *SelectAUTO, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Rocket.png, include-all: true }
   - { name: 自动选择, <<: *SelectALL, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Auto.png }
   - { name: GLOBAL, <<: *SelectDirect, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png, include-all: true }
-  - { name: Apple, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png }
-  - { name: BiliBili, <<: *SelectDirect, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/bilibili_4.png }
+  # - { name: Apple, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png }
+  # - { name: BiliBili, <<: *SelectDirect, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/bilibili_4.png }
   - { name: Claude, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/lobehub/lobe-icons@master/packages/static-png/light/claude-color.png }
   - { name: Disney, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Disney.png }
   - { name: Emby, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Emby.png }
@@ -200,14 +200,14 @@ proxy-groups:
 rule-anchor:
   DomainYaml: &DomainYaml { behavior: domain, interval: 86400, proxy: 手动选择, type: http }
   ClassicalYaml: &ClassicalYaml { behavior: classical, interval: 86400, proxy: 手动选择, type: http }
-
+  IpCIDRlYaml: &IpCIDRlYaml { behavior: ipcidr, interval: 86400, proxy: 手动选择, type: http }
 # 官方配置文档: https://wiki.metacubex.one/config/rule-providers/
 rule-providers:
   # 这里是blackmatrix7大佬的一些规则常用的都在这里 有需要的佬友在这里添加就好了
-  Apple: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_No_Resolve.yaml}
+  # Apple: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_No_Resolve.yaml}
   # BiliBili: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BiliBili/BiliBili.yaml }
-  # China: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/China/China_Classical_No_Resolve.yaml }
   ChinaCustom: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/wanswu/my-backup@main/clash/rule/ChinaCustom.yaml }
+  China: { <<: *IpCIDRlYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ChinaIPs/ChinaIPs_IP.yaml }
   Claude: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Claude/Claude_No_Resolve.yaml }
   Disney: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Disney/Disney_No_Resolve.yaml }
   Emby: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Emby/Emby_No_Resolve.yaml }
@@ -217,7 +217,7 @@ rule-providers:
   # GlobalCustom: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/wanswu/my-backup@main/clash/rule/GlobalCustom.yaml }
   # Global: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Global/Global.yaml }
   # Hijacking: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Hijacking/Hijacking.yaml }
-  Lan: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan_No_Resolve_No_Resolve.yaml }
+  Lan: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan_No_Resolve.yaml }
   Microsoft: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft_No_Resolve.yaml }
   Netflix: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Netflix/Netflix_No_Resolve.yaml }
   OpenAI: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI_No_Resolve.yaml }
@@ -240,12 +240,19 @@ rules:
   # [进程匹配],[进程名称],[规则]
   # - RULE-SET,Hijacking,DIRECT
   # [规则匹配],[规则集],[规则],[不解析]  这里不使用GEOIP,private，是因为我测试下来感觉使用GEO会让clash内存变高所以就没使用了
+  # 注释的一些规则是因为有些佬友可能不需要使用到，可以根据自己的需求来添加或者删除
+  # - RULE-SET,Apple,Apple,no-resolve
+  # - RULE-SET,BiliBili,BiliBili,no-resolve
+  # - RULE-SET,GlobalCustom,手动选择
+  # - RULE-SET,Global,手动选择
+  # - PROCESS-NAME,prl_naptd,漏网之鱼
+  - RULE-SET,DNSLeak,手动选择,no-resolve
+  - RULE-SET,Lan,直连,no-resolve
   - RULE-SET,Telegram,Telegram,no-resolve
   - RULE-SET,Github,Github,no-resolve
   - RULE-SET,Gemini,Gemini,no-resolve
   - RULE-SET,Google,Google,no-resolve
   - RULE-SET,YouTube,YouTube,no-resolve
-  # - RULE-SET,BiliBili,BiliBili,no-resolve
   - RULE-SET,OneDrive,OneDrive,no-resolve
   - RULE-SET,Microsoft,Microsoft,no-resolve
   - RULE-SET,TikTok,TikTok,no-resolve
@@ -257,14 +264,8 @@ rules:
   - RULE-SET,Claude,Claude,no-resolve
   - RULE-SET,Steam,Steam,no-resolve
   - RULE-SET,Emby,Emby,no-resolve
-  # - RULE-SET,GlobalCustom,手动选择
-  # - RULE-SET,Global,手动选择
-  - RULE-SET,DNSLeak,手动选择,no-resolve
-  - RULE-SET,Lan,直连,no-resolve
-  # - PROCESS-NAME,prl_naptd,漏网之鱼
   - RULE-SET,ChinaCustom,直连,no-resolve
   # global
-  - GEOIP,CN,直连,no-resolve
+  - RULE-SET,China,直连,no-resolve
   # 没有匹配到规则的全部走[漏网之鱼]的这个规则
   - MATCH,漏网之鱼
-  
