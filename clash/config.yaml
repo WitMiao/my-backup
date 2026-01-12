@@ -79,7 +79,7 @@ dns:
 
 # 通用配置
 mode: rule
-ipv6: true
+ipv6: false
 mixed-port: 7890
 allow-lan: true
 bind-address: 0.0.0.0
@@ -135,26 +135,31 @@ sniffer:
   sniff:
   TLS:
     ports:
-    - 443
-    - 8443
+      - 443
+      - 8443
   HTTP:
     ports:
-    - 80
-    - 8080-8880
+      - 80
+      - 8080-8880
     override-destination: true
   QUIC:
     ports:
-    - 443
-    - 8443
-    - 8444
+      - 443
+      - 8443
+      - 8444
   force-domain:
-  - +.v2ex.com
-  - www.google.com
-  - google.com
+    - +.v2ex.com
+    - +.github.com 
+    - +.githubusercontent.com
+    - +.githubassets.com
+    - +.google.com 
+    - +.googleapis.com 
+    - +.gstatic.com
+    - +.youtube.com
   skip-domain:
-  - Mijia Cloud
-  - dlg.io.mi.com
-  - +.apple.com
+    - Mijia Cloud
+    - dlg.io.mi.com
+    - +.apple.com
 
 # 面板设置
 external-controller: 127.0.0.1:9090
@@ -164,10 +169,11 @@ external-ui-name: zashboard
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
 # 代理组锚点，是为了减少重复配置
-SelectALL: &SelectALL { type: url-test, proxies: [ 香港, 澳门, 台湾, 日本, 韩国, 美国, 英国, 德国, 法国, 印度, 印尼, 越南, 泰国, 澳洲, 巴西, 荷兰, 其他, 土耳其, 阿根廷, 新加坡, DIRECT, REJECT ], hidden: true, include-all: true }
+SelectALL: &SelectALL { type: url-test, proxies: [ 香港, 澳门, 台湾, 日本, 韩国, 美国, 英国, 德国, 法国, 印度, 印尼, 越南, 泰国, 澳洲, 巴西, 荷兰, 其他, 土耳其, 阿根廷, 新加坡 ], hidden: true, include-all: true }
 SelectAUTO: &SelectAUTO { type: select, proxies: [ 香港, 澳门, 台湾, 日本, 韩国, 美国, 英国, 德国, 法国, 印度, 印尼, 越南, 泰国, 澳洲, 巴西, 荷兰, 其他, 土耳其, 阿根廷, 新加坡,自动选择, DIRECT, REJECT ] }
 SelectTW: &SelectTW { type: select, proxies: [ 台湾, 手动选择, 香港, 澳门, 日本, 韩国, 美国, 英国, 德国, 法国, 印度, 印尼, 越南, 泰国, 澳洲, 巴西, 荷兰, 其他, 土耳其, 阿根廷, 新加坡, DIRECT, REJECT ] }
-SelectDirect: &SelectDirect { type: select, proxies: [ DIRECT, REJECT, 手动选择, 香港, 澳门, 台湾, 日本, 韩国, 美国, 英国, 德国, 法国, 印度, 印尼, 越南, 泰国, 澳洲, 巴西, 荷兰, 其他, 土耳其, 阿根廷, 新加坡, REJECT ] }
+SelectDirect: &SelectDirect { type: select, proxies: [ DIRECT, REJECT, 手动选择, 香港, 澳门, 台湾, 日本, 韩国, 美国, 英国, 德国, 法国, 印度, 印尼, 越南, 泰国, 澳洲, 巴西, 荷兰, 其他, 土耳其, 阿根廷, 新加坡 ] }
+SelectReject: &SelectReject { type: select, proxies: [ REJECT, DIRECT ] }
 SelectProxy: &SelectProxy { type: select, proxies: [ 手动选择, 香港, 澳门, 台湾, 日本, 韩国, 美国, 英国, 德国, 法国, 印度, 印尼, 越南, 泰国, 澳洲, 巴西, 荷兰, 其他, 土耳其, 阿根廷, 新加坡, DIRECT, REJECT ] }
 # hidden: true 是为了隐藏地区分组，有需要显示出来的佬友可以删除
 UrlTest: &UrlTest { type: url-test, interval: 60, tolerance: 30, url: 'https://www.gstatic.com/generate_204', hidden: true, include-all: true }
@@ -179,6 +185,7 @@ proxy-groups:
   - { name: 自动选择, <<: *SelectALL, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Auto.png }
   - { name: GLOBAL, <<: *SelectDirect, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png, include-all: true }
   # - { name: Apple, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png }
+  # - { name: 广告拦截, <<: *SelectReject, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Advertising.png }
   - { name: BiliBili, <<: *SelectDirect, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/bilibili_4.png }
   - { name: Claude, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/lobehub/lobe-icons@master/packages/static-png/light/claude-color.png }
   - { name: Disney, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Disney.png }
@@ -230,6 +237,7 @@ rule-anchor:
 rule-providers:
   # 这里是blackmatrix7大佬的一些规则常用的都在这里 有需要的佬友在这里添加就好了
   # Apple: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_No_Resolve.yaml}
+  Advertising: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Advertising/Advertising_No_Resolve.yaml }
   BiliBili: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BiliBili/BiliBili.yaml }
   ChinaCustom: { <<: *ClassicalYaml, url: https://cdn.jsdelivr.net/gh/wanswu/my-backup@main/clash/rule/ChinaCustom.yaml }
   China: { <<: *IpCIDRlYaml, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ChinaMax/ChinaMax_IP.yaml }
@@ -266,6 +274,7 @@ rules:
   # - RULE-SET,Hijacking,DIRECT
   # [规则匹配],[规则集],[规则],[不解析]  这里不使用GEOIP,private，是因为我测试下来感觉使用GEO会让clash内存变高所以就没使用了
   # 注释的一些规则是因为有些佬友可能不需要使用到，可以根据自己的需求来添加或者删除
+  - RULE-SET,Advertising,REJECT,no-resolve
   # - RULE-SET,Apple,Apple,no-resolve
   - RULE-SET,BiliBili,BiliBili,no-resolve
   # - RULE-SET,GlobalCustom,手动选择
@@ -289,7 +298,7 @@ rules:
   - RULE-SET,Claude,Claude,no-resolve
   - RULE-SET,Steam,Steam,no-resolve
   - RULE-SET,Emby,Emby,no-resolve
-  - RULE-SET,ChinaCustom,直连,no-resolve
+  - RULE-SET,ChinaCustom,直连
   # global
   - RULE-SET,China,直连
   # 没有匹配到规则的全部走[漏网之鱼]的这个规则
