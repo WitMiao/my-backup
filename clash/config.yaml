@@ -89,11 +89,11 @@ find-process-mode: strict
 # 规则选择缓存
 profile:
   store-selected: true
-  store-fake-ip: true
+  store-fake-ip: false
 tcp-concurrent: true
 keep-alive-interval: 15
 keep-alive-idle: 15
-disable-keep-alive: true
+disable-keep-alive: false
 
 # GEO配置
 geodata-mode: false
