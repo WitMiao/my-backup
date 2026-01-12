@@ -19,39 +19,63 @@ proxy-providers:
 # dns配置
 dns:
   enable: true
-  ipv6: true
+  ipv6: false
   prefer-h3: false
-  use-hosts: false
-  use-system-hosts: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
+    - geosite:private
+    - geosite:cn
     - "+.lan"
     - "+.local"
-    - "+.msftconnecttest.com"
-    - "+.msftncsi.com"
-    - "localhost.ptlogin2.qq.com"
-    - "localhost.sec.qq.com"
-    - "localhost.work.weixin.qq.com"
-    - "market.xiaomi.com"
-    - "*.xiaomi.com"
-    - "*.mi.com"
-    - "*.miui.com"
-    - "*.xiaomi.net"
-    - "*.mi.net"
-    - "*.miui.net"
-    - "*.pcbeta.com"
+    - "+.+.mi.com"
+    - "+.miui.com"
+    - "+.xiaomi.net"
+    - "+.qq.com"
   default-nameserver:
-    - tls://223.5.5.5
-    - tls://119.29.29.29
+    - 223.5.5.5
+    - 119.29.29.29
   nameserver:
-    - https://1.1.1.1/dns-query
-    - https://dns.google.com/dns-query
-  proxy-server-nameserver:
-    - https://doh.pub/dns-query
-  direct-nameserver:
-    - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  fallback:
+    - tls://1.1.1.1
+    - tls://1.0.0.1
+    - https://cloudflare-dns.com/dns-query
+    - tls://8.8.8.8
+  fallback-filter:
+    geoip: false
+    ipcidr:
+      - 240.0.0.0/4
+      - 0.0.0.0/8
+      - 10.0.0.0/8
+      - 127.0.0.0/8
+      - 169.254.0.0/16
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+      - 224.0.0.0/4
+    domain:
+      - +.google.com
+      - +.googleapis.com
+      - +.gstatic.com
+      - +.youtube.com
+      - +.ytimg.com
+      - +.ggpht.com
+      - +.facebook.com
+      - +.fbcdn.net
+      - +.instagram.com
+      - +.github.com
+      - +.githubusercontent.com
+      - +.openai.com
+      - +.claude.ai
+      - +.anthropic.com
+      - +.discord.com
+      - +.twitch.tv
+      - +.netflix.com
+      - +.nflxvideo.net
+  direct-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
 
 # 通用配置
 mode: rule
@@ -122,6 +146,7 @@ sniffer:
     ports:
     - 443
     - 8443
+    - 8444
   force-domain:
   - +.v2ex.com
   - www.google.com
@@ -150,7 +175,7 @@ Fallback: &Fallback { type: fallback, interval: 60, tolerance: 30, url: 'https:/
 
 # 代理组
 proxy-groups:
-  - { name: 手动选择, <<: *SelectAUTO, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Rocket.png, include-all: true }
+  - { name: 手动选择, <<: *SelectAUTO, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Rocket.png }
   - { name: 自动选择, <<: *SelectALL, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Auto.png }
   - { name: GLOBAL, <<: *SelectDirect, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png, include-all: true }
   # - { name: Apple, <<: *SelectProxy, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png }
@@ -183,7 +208,7 @@ proxy-groups:
   - { name: 英国, <<: *UrlTest, filter: 🇬🇧|英国|英|GBR|UK|united kingdom|london, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_Kingdom.png }
   - { name: 德国, <<: *UrlTest, filter: 🇩🇪|德国|德|DE|DEU|germany|frankfurt, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Germany.png }
   - { name: 法国, <<: *UrlTest, filter: 🇫🇷|法国|法|FR|france|paris, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/France.png }
-  - { name: 印度, <<: *UrlTest, filter: 🇮🇳|印度|IN|IND|india|mumbai, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/France.png }
+  - { name: 印度, <<: *UrlTest, filter: 🇮🇳|印度|IN|IND|india|mumbai, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/India.png }
   - { name: 印尼, <<: *UrlTest, filter: 🇮🇩|印尼|印度尼西亚|ID|indonesia|jakarta, icon: https://cdn.jsdelivr.net/gh/wanswu/my-backup@main/IconSet/Country/Indonesia.png }
   - { name: 越南, <<: *UrlTest, filter: 🇻🇳|越南|VN|vietnam, icon: https://cdn.jsdelivr.net/gh/wanswu/my-backup@main/IconSet/Country/Vietnam.png }
   - { name: 泰国, <<: *UrlTest, filter: 🇹🇭|泰国|TH|thailand|bangkok, icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Thailand.png }
