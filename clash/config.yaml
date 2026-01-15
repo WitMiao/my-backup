@@ -7,6 +7,7 @@ proxy-providers:
     url: https://al121.cc/#/register?code=R7vdKxbE
     path: ./proxy_provider/p1.yaml
     override:
+      udp: true
       additional-prefix: '主-'  # 订阅节点前缀，方便区分该节点属于哪个订阅链接 例如`主-香港🇭🇰
 
   prepare:
@@ -14,6 +15,7 @@ proxy-providers:
     url: https://al121.cc/#/register?code=R7vdKxbE
     path: ./proxy_provider/p2.yaml
     override:
+      udp: true
       additional-prefix: '备-'
 
 # 通用配置
