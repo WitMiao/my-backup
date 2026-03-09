@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JetBra · Keygen</title>
+  <link rel="icon" href="https://www.jetbrains.com/favicon.ico?r=1234" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <!-- forge for RSA/crypto operations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/1.3.1/forge.min.js"></script>
+  <style>
+    .card-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-top: 6px;
+      font-weight: 700;
+    }
+    .card-tag-free { background: rgba(74,222,128,0.1); color: #4ade80; border: 1px solid rgba(74,222,128,0.25); }
+    .card-tag-freemium { background: rgba(251,191,36,0.1); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25); }
+    .card-tag-paid { background: rgba(248,113,113,0.1); color: #f87171; border: 1px solid rgba(248,113,113,0.25); }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #18181f;
+      --border: rgba(255,255,255,0.07);
+      --accent: #7c6af7;
+      --accent2: #f76af0;
+      --accent-glow: rgba(124,106,247,0.35);
+      --text: #e8e8f0;
+      --text-dim: #6b6b80;
+      --text-bright: #ffffff;
+      --radius: 14px;
+      --mono: 'Space Mono', monospace;
+      --sans: 'Syne', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(124,106,247,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,106,247,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; opacity: 0.4; }
+    .orb-1 { width: 500px; height: 500px; background: var(--accent); top: -150px; left: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: var(--accent2); bottom: -100px; right: -80px; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 48px;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      background: rgba(10,10,15,0.7);
+    }
+
+    .logo {
+      font-family: var(--sans);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      color: var(--text-bright);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
+    }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+      border: 1px solid transparent;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    .btn-accent:hover { background: #8f7eff; box-shadow: 0 0 30px var(--accent-glow); transform: translateY(-1px); }
+    .btn-accent:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 72px 24px 48px;
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: inline-block;
+      padding: 4px 12px;
+      border: 1px solid rgba(124,106,247,0.3);
+      border-radius: 100px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: var(--text-bright);
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub { font-family: var(--mono); font-size: 0.8rem; color: var(--text-dim); letter-spacing: 0.02em; }
+
+    .grid-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 32px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-title { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; color: var(--text-dim); text-transform: uppercase; }
+    .section-line { flex: 1; height: 1px; background: var(--border); }
+    .section-count { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(124,106,247,0.08), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .card:hover { border-color: rgba(124,106,247,0.4); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(124,106,247,0.1); }
+    .card:hover::before { opacity: 1; }
+    .card:active { transform: translateY(0); }
+
+    .card-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .card-icon-text { font-family: var(--mono); font-size: 0.65rem; font-weight: 700; color: var(--accent); letter-spacing: 0.05em; }
+
+    .card-name { font-size: 0.9rem; font-weight: 700; color: var(--text-bright); margin-bottom: 6px; letter-spacing: -0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-codes { font-family: var(--mono); font-size: 0.65rem; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .card-action {
+      position: absolute;
+      top: 12px; right: 12px;
+      width: 28px; height: 28px;
+      border-radius: 7px;
+      background: rgba(124,106,247,0.1);
+      border: 1px solid rgba(124,106,247,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: all 0.2s;
+      color: var(--accent);
+    }
+
+    .card:hover .card-action { opacity: 1; }
+    .card-action svg { width: 14px; height: 14px; }
+    .card-plugin { border-style: dashed; }
+
+    #scroll-sentinel { height: 1px; width: 100%; }
+
+    .scroll-loader { display: none; align-items: center; justify-content: center; gap: 10px; padding: 32px 0; font-family: var(--mono); font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.06em; }
+    .scroll-loader.visible { display: flex; }
+
+    .scroll-loader-dots { display: flex; gap: 5px; }
+    .scroll-loader-dots span { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: dot-bounce 1.2s ease-in-out infinite; }
+    .scroll-loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .scroll-loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dot-bounce {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    .scroll-end-tip { text-align: center; padding: 24px 0 0; font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim); letter-spacing: 0.08em; display: none; }
+    .scroll-end-tip.visible { display: block; }
+
+    #toast-container {
+      position: fixed;
+      top: 24px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      animation: toast-in 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      transition: opacity 0.3s, transform 0.3s;
+      max-width: 320px;
+    }
+
+    .toast.hide { opacity: 0; transform: translateX(20px); }
+    .toast-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .toast.success .toast-dot { background: #4ade80; box-shadow: 0 0 8px #4ade80; }
+    .toast.error   .toast-dot { background: #f87171; box-shadow: 0 0 8px #f87171; }
+
+    @keyframes toast-in {
+      from { opacity: 0; transform: translateX(24px) scale(0.95); }
+      to   { opacity: 1; transform: translateX(0) scale(1); }
+    }
+
+    #modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    #modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 32px;
+      width: 100%;
+      max-width: 400px;
+      animation: modal-in 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    @keyframes modal-in {
+      from { opacity: 0; transform: scale(0.9); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-eyebrow { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+    .modal-title { font-size: 1.4rem; font-weight: 800; color: var(--text-bright); margin-bottom: 24px; letter-spacing: -0.03em; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-family: var(--mono); font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+
+    .form-input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-input:focus { border-color: rgba(124,106,247,0.6); box-shadow: 0 0 0 3px rgba(124,106,247,0.1); }
+
+    .modal-footer { display: flex; gap: 10px; margin-top: 24px; }
+    .modal-footer .btn { flex: 1; padding: 10px; font-size: 0.8rem; }
+
+    .search-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 560px;
+      margin: 0 auto 56px;
+      padding: 0 24px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-box:focus-within { border-color: rgba(124,106,247,0.5); box-shadow: 0 0 0 3px rgba(124,106,247,0.1); }
+
+    .search-icon { padding: 0 14px; color: var(--text-dim); flex-shrink: 0; display: flex; align-items: center; }
+    .search-icon svg { width: 16px; height: 16px; }
+
+    .search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text);
+      padding: 12px 0;
+      letter-spacing: 0.02em;
+    }
+    .search-input::placeholder { color: var(--text-dim); }
+
+    .search-clear { padding: 0 12px; background: none; border: none; cursor: pointer; color: var(--text-dim); display: none; align-items: center; font-size: 1rem; transition: color 0.2s; }
+    .search-clear:hover { color: var(--text); }
+    .search-clear.visible { display: flex; }
+
+    .search-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0 18px;
+      height: 100%;
+      min-height: 44px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .search-btn:hover { background: #8f7eff; }
+
+    .search-status { font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim); text-align: center; margin-top: 10px; min-height: 16px; letter-spacing: 0.04em; }
+    .search-status .hl { color: var(--accent); }
+
+    .separator { height: 48px; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+
+    /* ── Cert Config Modal ── */
+    #cert-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 1100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+      padding: 24px;
+    }
+    #cert-modal-overlay.open { display: flex; }
+
+    .cert-modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 32px;
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: modal-in 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .cert-modal .form-textarea {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text);
+      outline: none;
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.5;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .cert-modal .form-textarea:focus {
+      border-color: rgba(124,106,247,0.6);
+      box-shadow: 0 0 0 3px rgba(124,106,247,0.1);
+    }
+
+    .cert-status {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      margin-top: 5px;
+      min-height: 14px;
+    }
+    .cert-status.ok  { color: #4ade80; }
+    .cert-status.err { color: #f87171; }
+
+    /* ── Power Panel ── */
+    .power-panel {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto 40px;
+      padding: 0 32px;
+    }
+
+    .power-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .power-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+
+    .power-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .power-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 8px #4ade80;
+      flex-shrink: 0;
+    }
+    .power-dot.err { background: #f87171; box-shadow: 0 0 8px #f87171; }
+
+    .power-actions { display: flex; gap: 8px; }
+
+    .power-copy-btn {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .power-copy-btn:hover { background: var(--surface2); color: var(--text); border-color: rgba(255,255,255,0.15); }
+
+    .power-content {
+      padding: 16px 20px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      word-break: break-all;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+      min-height: 56px;
+    }
+
+    .power-content .power-seg { color: var(--text-dim); }
+    .power-content .power-val { color: var(--text); }
+    .power-content .power-result { color: #4ade80; }
+    .power-content .power-err { color: #f87171; }
+
+    .power-filename {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      padding: 8px 20px 12px;
+      letter-spacing: 0.06em;
+    }
+  </style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div id="toast-container"></div>
+
+<!-- Cert Config Modal -->
+<div id="cert-modal-overlay">
+  <div class="cert-modal">
+    <div class="modal-eyebrow">证书配置</div>
+    <div class="modal-title">自定义密钥 &amp; 证书</div>
+
+    <div class="form-group">
+      <label class="form-label" for="cfg-private-key">PrivateKey PEM</label>
+      <textarea id="cfg-private-key" class="form-textarea" rows="6" placeholder="-----BEGIN RSA PRIVATE KEY-----&#10;...&#10;-----END RSA PRIVATE KEY-----"></textarea>
+      <div class="cert-status" id="cfg-private-key-status"></div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="cfg-crt">CRT PEM (证书)</label>
+      <textarea id="cfg-crt" class="form-textarea" rows="6" placeholder="-----BEGIN CERTIFICATE-----&#10;...&#10;-----END CERTIFICATE-----"></textarea>
+      <div class="cert-status" id="cfg-crt-status"></div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="cfg-root">Root Certificate PEM</label>
+      <textarea id="cfg-root" class="form-textarea" rows="6" placeholder="-----BEGIN CERTIFICATE-----&#10;...&#10;-----END CERTIFICATE-----"></textarea>
+      <div class="cert-status" id="cfg-root-status"></div>
+    </div>
+
+    <div class="modal-footer" style="flex-direction:column;gap:8px;">
+      <button class="btn btn-accent" onclick="saveCertConfig()">保存并重新计算 →</button>
+      <button class="btn" style="background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:8px;padding:10px;font-family:var(--mono);font-size:0.8rem;cursor:pointer;" onclick="resetCertConfig()">恢复默认证书</button>
+      <button class="btn" style="background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:8px;padding:10px;font-family:var(--mono);font-size:0.8rem;cursor:pointer;" onclick="closeCertModal()">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- License Modal -->
+<div id="modal-overlay">
+  <div class="modal">
+    <div class="modal-eyebrow">初始化</div>
+    <div class="modal-title">请输入授权信息</div>
+    <div class="form-group">
+      <label class="form-label" for="licenseeName">证书名称</label>
+      <input id="licenseeName" class="form-input" type="text" value="Daniel Wu" placeholder="Organization / Name" />
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="assigneeName">姓名</label>
+      <input id="assigneeName" class="form-input" type="text" value="Eddie Pang" placeholder="Assignee name" />
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="expiryDate">过期时间</label>
+      <input id="expiryDate" class="form-input" type="text" value="2099-12-31" placeholder="2099-12-31" />
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-accent" onclick="submitLicenseInfo()">确认 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    JetBra · Keygen
+  </div>
+  <div style="display:flex;gap:8px;">
+    <button class="btn btn-accent" style="border-radius:8px;font-size:0.75rem;padding:8px 16px;background:transparent;border:1px solid var(--border);color:var(--text-dim);" onclick="openCertModal()">证书配置</button>
+    <button class="btn btn-accent" style="border-radius:8px;font-size:0.75rem;padding:8px 16px;" onclick="openModal()">修改信息</button>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-label">License Generator</div>
+  <h1 class="hero-title">点击卡片<br><span>获取激活码</span></h1>
+  <p class="hero-sub">// 配合 ja-netfilter 使用 · 纯前端实现</p>
+</div>
+
+<!-- Power.conf Panel -->
+<div class="power-panel">
+  <div class="power-box">
+    <div class="power-header" onclick="togglePowerPanel()" style="cursor:pointer;user-select:none;">
+      <div class="power-label">
+        <div class="power-dot" id="power-dot"></div>
+        power.conf &nbsp;·&nbsp; [Result] 段落内容
+      </div>
+      <div class="power-actions" onclick="event.stopPropagation()">
+        <button class="power-copy-btn" onclick="copyPowerConf()">复制</button>
+        <button class="power-copy-btn" id="power-toggle-btn" onclick="togglePowerPanel()">展开 ↓</button>
+      </div>
+    </div>
+    <div id="power-body" style="display:none;">
+      <div class="power-content" id="power-content">计算中...</div>
+      <div class="power-filename">// 粘贴至 ja-netfilter/config/power.conf → [Result] 下方</div>
+    </div>
+  </div>
+</div>
+
+<!-- Search bar -->
+<div class="search-wrapper">
+  <div class="search-box">
+    <div class="search-icon">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+    </div>
+    <input id="search-input" class="search-input" type="text" placeholder="搜索 Marketplace 插件..." autocomplete="off" />
+    <button class="search-clear" id="search-clear" onclick="clearSearch()" title="清除">✕</button>
+    <button class="search-btn" id="search-btn" onclick="doSearch()">搜索</button>
+  </div>
+  <div class="search-status" id="search-status"></div>
+</div>
+
+<!-- Grid wrapper -->
+<div class="grid-wrapper">
+  <div id="ide-section">
+    <div class="section-header">
+      <span class="section-title">JetBrains IDEs</span>
+      <div class="section-line"></div>
+      <span class="section-count" id="ide-count">14 products</span>
+    </div>
+    <div class="products-grid" id="products-grid">
+      <div class="card" data-product="IntelliJ IDEA" data-product-codes="II,PCWMP,PSI" onclick="copyLicense(this)">
+        <div class="card-icon"><img src="https://resources.jetbrains.com/storage/logos/web/intellij-idea/intellij-idea.svg" alt="IntelliJ IDEA" /></div>
+        <div class="card-name">IntelliJ IDEA</div>
+        <div class="card-codes">II · PCWMP · PSI</div>
+        <div class="card-action"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg></div>
+      </div>
+      <div class="card" data-product="PhpStorm" data-product-codes="PS,PCWMP,PSI" onclick="copyLicense(this)">
+        <div class="card-icon"><img src="https://resources.jetbrains.com/storage/logos/web/phpstorm/phpstorm.svg" alt="PhpStorm" /></div>
+        <div class="card-name">PhpStorm</div>
+        <div class="card-codes">PS · PCWMP · PSI</div>
+        <div class="card-action"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg></div>
+      </div>
+      <div class="card" data-product="PyCharm" data-product-codes="PC,PSI,PCWMP" onclick="copyLicense(this)">
+        <div class="card-icon"><img src="https://resources.jetbrains.com/storage/logos/web/pycharm/pycharm.svg" alt="PyCharm" /></div>
+        <div class="card-name">PyCharm</div>
+        <div class="card-codes">PC · PSI · PCWMP</div>
+        <div class="card-action"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg></div>
+      </div>
+      <div class="card" data-product="WebStorm" data-product-codes="WS,PCWMP,PSI" onclick="copyLicense(this)">
+        <div class="card-icon"><img src="https://resources.jetbrains.com/storage/logos/web/webstorm/webstorm.svg" alt="WebStorm" /></div>
+        <div class="card-name">WebStorm</div>
+        <div class="card-codes">WS · PCWMP · PSI</div>
+        <div class="card-action"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg></div>
+      </div>
+      <div class="card" data-product="GoLand" data-product-codes="GO,PSI,PCWMP" onclick="copyLicense(this)">
+        <div class="card-icon"><img src="https://resources.jetbrains.com/storage/logos/web/goland/goland.svg" alt="GoLand" /></div>
+        <div class="card-name">GoLand</div>
+        <div class="card-codes">GO · PSI · PCWMP</div>
+        <div class="card-action"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg></div>
+      </div>
+      <div class="card" data-product="CLion" data-product-codes="CL,PSI,PCWMP" onclick="copyLicense(this)">
+        <div class="card-icon"><img src="https://resources.jetbrains.com/storage/logos/web/clion/clion.svg" alt="CLion" /></div>
+        <div class="card-name">CLion</div>
+        <div class="card-codes">CL · PSI · PCWMP</div>
+        <div class="card-action"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg></div>
+      </div>
+      <div class="card" data-product="Rider" data-product-codes="RD,PDB,PSI,PCWMP" onclick="copyLicense(this)">
+        <div class="card-icon"><img src="https://resources.jetbrains.com/storage/logos/web/rider/rider.svg" alt="Rider" /></div>
+        <div class="card-name">Rider</div>
+        <div class="card-codes">RD · PDB · PSI</div>
+        <div class="card-action"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg></div>
+      </div>
+      <div class="card" data-product="RubyMine" data-product-codes="RM,PCWMP,PSI" onclick="copyLicense(this)">
+        <div class="card-icon"><img src="https://resources.jetbrains.com/storage/logos/web/rubymine/rubymine.svg" alt="RubyMine" /></div>
+        <div class="card-name">RubyMine</div>
+        <div class="card-codes">RM · PCWMP · PSI</div>
+        <div class="card-action"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg></div>
+      </div>
+      <div class="card" data-product="DataGrip" data-product-codes="DB,PSI,PDB" onclick="copyLicense(this)">
+        <div class="card-icon"><img src="https://resources.jetbrains.com/storage/logos/web/datagrip/datagrip.svg" alt="DataGrip" /></div>
+        <div class="card-name">DataGrip</div>
+        <div class="card-codes">DB · PSI · PDB</div>
+        <div class="card-action"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg></div>
+      </div>
+      <div class="card" data-product="DataSpell" data-product-codes="DS,PSI,PDB,PCWMP" onclick="copyLicense(this)">
+        <div class="card-icon"><img src="https://resources.jetbrains.com/storage/logos/web/dataspell/dataspell.svg" alt="DataSpell" /></div>
+        <div class="card-name">DataSpell</div>
+        <div class="card-codes">DS · PSI · PDB</div>
+        <div class="card-action"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg></div>
+      </div>
+      <div class="card" data-product="AppCode" data-product-codes="AC,PCWMP,PSI" onclick="copyLicense(this)">
+        <div class="card-icon"><img src="https://resources.jetbrains.com/storage/logos/web/appcode/appcode.svg" alt="AppCode" /></div>
+        <div class="card-name">AppCode</div>
+        <div class="card-codes">AC · PCWMP · PSI</div>
+        <div class="card-action"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg></div>
+      </div>
+      <div class="card" data-product="dotCover" data-product-codes="DC" onclick="copyLicense(this)">
+        <div class="card-icon"><img src="https://resources.jetbrains.com/storage/logos/web/dotcover/dotcover.svg" alt="dotCover" /></div>
+        <div class="card-name">dotCover</div>
+        <div class="card-codes">DC</div>
+        <div class="card-action"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg></div>
+      </div>
+      <div class="card" data-product="dotTrace" data-product-codes="DPN,DP" onclick="copyLicense(this)">
+        <div class="card-icon"><img src="https://resources.jetbrains.com/storage/logos/web/dottrace/dottrace.svg" alt="dotTrace" /></div>
+        <div class="card-name">dotTrace</div>
+        <div class="card-codes">DPN · DP</div>
+        <div class="card-action"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg></div>
+      </div>
+      <div class="card" data-product="dotMemory" data-product-codes="DM" onclick="copyLicense(this)">
+        <div class="card-icon"><img src="https://resources.jetbrains.com/storage/logos/web/dotmemory/dotmemory.svg" alt="dotMemory" /></div>
+        <div class="card-name">dotMemory</div>
+        <div class="card-codes">DM</div>
+        <div class="card-action"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="separator" id="ide-separator"></div>
+
+  <div class="section-header">
+    <span class="section-title">Marketplace Plugins</span>
+    <div class="section-line"></div>
+    <span class="section-count" id="plugin-count">loading...</span>
+  </div>
+
+  <div class="products-grid" id="plugins-grid"></div>
+
+  <div class="scroll-loader" id="scroll-loader">
+    <div class="scroll-loader-dots"><span></span><span></span><span></span></div>
+    加载中...
+  </div>
+  <div class="scroll-end-tip" id="scroll-end-tip">— 已加载全部插件 —</div>
+  <div id="scroll-sentinel"></div>
+</div>
+
+<script>
+// ── Default PEMs ──
+const DEFAULT_PRIVATE_KEY_PEM = `-----BEGIN RSA PRIVATE KEY-----
+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
+-----END RSA PRIVATE KEY-----`;
+
+const DEFAULT_CRT_PEM = `-----BEGIN CERTIFICATE-----
+MIIEtTCCAp2gAwIBAgIUDyuccmylba71lZQAQic5TJiAhwwwDQYJKoZIhvcNAQEL
+BQAwGDEWMBQGA1UEAwwNSmV0UHJvZmlsZSBDQTAeFw0yMzA5MjkxNDA2MTJaFw0z
+MzA5MjcxNDA2MTJaMBExDzANBgNVBAMMBk5vdmljZTCCAiIwDQYJKoZIhvcNAQEB
+BQADggIPADCCAgoCggIBALenqcGP2ZxGkYqmKA9c4Hzf8+YD1smvmOxKjd+bmTLr
+utM/hXv1cj1rW3/lqyDtdDk7K6W8/TDq1CRrEt+Do6l30DxhAiC34aH8DmGwgq77
+xEoLimvH5LpePxflF+tbB1RZtFgFDOIYLdSQaKFH2JDgVKxhLiV3S6jniPhkCtWW
+rTs+E6vq4N15Bm3NnM5AJILqjtUbOjNfaxVq6RrOoTc0R3Fqqo6yvxo/+JYa2UnH
+IC+r2dbKuDLMUrtgnydEUdJNX0zH9FtcdELvr48uc9mY038TWUsZUK1pnQbxA2bP
+yA4qnYJ9IvUgO6LtLXvGFm137YQMS1N41AHDBOrwoNI8UoDX+qI3rM96biFOFvn7
+Edky7rByzybt3H+zxdojfjvpL1E0NO98BT9zfufHAaAxZtlmDOu5LDJe3CGurnyR
+MRExbtc+Qjl1mUh6tG4lakAwdsoxry0GdG72yaYyb9it53kaFks/T/s7Z7bRJzVF
+zQDV1Y4bzUtk43vKm2vztBVlQkBkZY5f2Jbe5Ig3b8swQzBnOT0mrL5SPUhwmQ6I
+xkEWztj55OEujBMmRr92oESuq9ZYMaeLidKWVR3/++HA8BRZaRGEKtSHZCbFEFdi
+hDxxJv9Xh6NuT/ewJ6HYp+0NQpFnUnJ72n8wV+tudpam7aKcdzVmz7cNwOhG2Ls7
+AgMBAAEwDQYJKoZIhvcNAQELBQADggIBAIdeaQfKni7tXtcywC3zJvGzaaj242pS
+WB1y40HW8jub0uHjTLsBPX27iA/5rb+rNXtUWX/f2K+DU4IgaIiiHhkDrMsw7piv
+azqwA9h7/uA0A5nepmTYf/HY4W6P2stbeqInNsFRZXS7Jg4Q5LgEtHKo/H8USjtV
+w9apmE3BCElkXRuelXMsSllpR/JEVv/8NPLmnHSY02q4KMVW2ozXtaAxSYQmZswy
+P1YnBcnRukoI4igobpcKQXwGoQCIUlec8LbFXYM9V2eNCwgABqd4r67m7QJq31Y/
+1TJysQdMH+hoPFy9rqNCxSq3ptpuzcYAk6qVf58PrrYH/6bHwiYPAayvvdzNPOhM
+9OCwomfcazhK3y7HyS8aBLntTQYFf7vYzZxPMDybYTvJM+ClCNnVD7Q9fttIJ6eM
+XFsXb8YK1uGNjQW8Y4WHk1MCHuD9ZumWu/CtAhBn6tllTQWwNMaPOQvKf1kr1Kt5
+etrONY+B6O+Oi75SZbDuGz7PIF9nMPy4WB/8XgKdVFtKJ7/zLIPHgY8IKgbx/VTz
+6uBhYo8wOf3xzzweMnn06UcfV3JGNvtMuV4vlkZNNxXeifsgzHugCvJX0nybhfBh
+fIqVyfK6t0eKJqrvp54XFEtJGR+lf3pBfTdcOI6QFEPKGZKoQz8Ck+BC/WBDtbjc
+/uYKczZ8DKZu
+-----END CERTIFICATE-----`;
+
+const DEFAULT_ROOT_PEM = `-----BEGIN CERTIFICATE-----
+MIIFOzCCAyOgAwIBAgIJANJssYOyg3nhMA0GCSqGSIb3DQEBCwUAMBgxFjAUBgNV
+BAMMDUpldFByb2ZpbGUgQ0EwHhcNMTUxMDAyMTEwMDU2WhcNNDUxMDI0MTEwMDU2
+WjAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBMIICIjANBgkqhkiG9w0BAQEFAAOC
+Ag8AMIICCgKCAgEA0tQuEA8784NabB1+T2XBhpB+2P1qjewHiSajAV8dfIeWJOYG
+y+ShXiuedj8rL8VCdU+yH7Ux/6IvTcT3nwM/E/3rjJIgLnbZNerFm15Eez+XpWBl
+m5fDBJhEGhPc89Y31GpTzW0vCLmhJ44XwvYPntWxYISUrqeR3zoUQrCEp1C6mXNX
+EpqIGIVbJ6JVa/YI+pwbfuP51o0ZtF2rzvgfPzKtkpYQ7m7KgA8g8ktRXyNrz8bo
+iwg7RRPeqs4uL/RK8d2KLpgLqcAB9WDpcEQzPWegbDrFO1F3z4UVNH6hrMfOLGVA
+xoiQhNFhZj6RumBXlPS0rmCOCkUkWrDr3l6Z3spUVgoeea+QdX682j6t7JnakaOw
+jzwY777SrZoi9mFFpLVhfb4haq4IWyKSHR3/0BlWXgcgI6w6LXm+V+ZgLVDON52F
+LcxnfftaBJz2yclEwBohq38rYEpb+28+JBvHJYqcZRaldHYLjjmb8XXvf2MyFeXr
+SopYkdzCvzmiEJAewrEbPUaTllogUQmnv7Rv9sZ9jfdJ/cEn8e7GSGjHIbnjV2ZM
+Q9vTpWjvsT/cqatbxzdBo/iEg5i9yohOC9aBfpIHPXFw+fEj7VLvktxZY6qThYXR
+Rus1WErPgxDzVpNp+4gXovAYOxsZak5oTV74ynv1aQ93HSndGkKUE/qA/JECAwEA
+AaOBhzCBhDAdBgNVHQ4EFgQUo562SGdCEjZBvW3gubSgUouX8bMwSAYDVR0jBEEw
+P4AUo562SGdCEjZBvW3gubSgUouX8bOhHKQaMBgxFjAUBgNVBAMMDUpldFByb2Zp
+bGUgQ0GCCQDSbLGDsoN54TAMBgNVHRMEBTADAQH/MAsGA1UdDwQEAwIBBjANBgkq
+hkiG9w0BAQsFAAOCAgEAjrPAZ4xC7sNiSSqh69s3KJD3Ti4etaxcrSnD7r9rJYpK
+BMviCKZRKFbLv+iaF5JK5QWuWdlgA37ol7mLeoF7aIA9b60Ag2OpgRICRG79QY7o
+uLviF/yRMqm6yno7NYkGLd61e5Huu+BfT459MWG9RVkG/DY0sGfkyTHJS5xrjBV6
+hjLG0lf3orwqOlqSNRmhvn9sMzwAP3ILLM5VJC5jNF1zAk0jrqKz64vuA8PLJZlL
+S9TZJIYwdesCGfnN2AETvzf3qxLcGTF038zKOHUMnjZuFW1ba/12fDK5GJ4i5y+n
+fDWVZVUDYOPUixEZ1cwzmf9Tx3hR8tRjMWQmHixcNC8XEkVfztID5XeHtDeQ+uPk
+X+jTDXbRb+77BP6n41briXhm57AwUI3TqqJFvoiFyx5JvVWG3ZqlVaeU/U9e0gxn
+8qyR+ZA3BGbtUSDDs8LDnE67URzK+L+q0F2BC758lSPNB2qsJeQ63bYyzf0du3wB
+/gb2+xJijAvscU3KgNpkxfGklvJD/oDUIqZQAnNcHe7QEf8iG2WqaMJIyXZlW3me
+0rn+cgvxHPt6N4EBh5GgNZR4l0eaFEV+fxVsydOQYo1RIyFMXtafFBqQl6DDxujl
+FeU3FZ+Bcp12t7dlM4E0/sS1XdL47CfGVj4Bp+/VbF862HmkAbd7shs7sDQkHbU=
+-----END CERTIFICATE-----`;
+
+// ── Active PEMs (loaded from localStorage or defaults) ──
+function loadCertConfig() {
+  try {
+    const saved = localStorage.getItem('certConfig');
+    if (saved) {
+      const cfg = JSON.parse(saved);
+      return {
+        privateKeyPem: cfg.privateKeyPem || DEFAULT_PRIVATE_KEY_PEM,
+        crtPem:        cfg.crtPem        || DEFAULT_CRT_PEM,
+        rootPem:       cfg.rootPem       || DEFAULT_ROOT_PEM,
+      };
+    }
+  } catch(e) {}
+  return { privateKeyPem: DEFAULT_PRIVATE_KEY_PEM, crtPem: DEFAULT_CRT_PEM, rootPem: DEFAULT_ROOT_PEM };
+}
+let activeCerts = loadCertConfig();
+
+// ── generateEqualResult (JS port of Go function) ──
+function generateEqualResult() {
+  try {
+    const crt      = forge.pki.certificateFromPem(activeCerts.crtPem);
+    const rootCert = forge.pki.certificateFromPem(activeCerts.rootPem);
+    const sigHex   = forge.util.bytesToHex(crt.signature);
+    const x        = new forge.jsbn.BigInteger(sigHex, 16);
+    const y        = 65537;
+    const z        = rootCert.publicKey.n;
+    const zpN      = crt.publicKey.n;
+    const r        = x.modPow(new forge.jsbn.BigInteger(String(y)), zpN);
+    return { ok: true, value: `EQUAL,${x.toString()},${y},${z.toString()}->${r.toString()}` };
+  } catch(e) {
+    return { ok: false, error: e.message };
+  }
+}
+
+function renderPowerPanel() {
+  const result  = generateEqualResult();
+  const content = document.getElementById('power-content');
+  const dot     = document.getElementById('power-dot');
+  if (result.ok) {
+    dot.className = 'power-dot';
+    const parts     = result.value.split(',');
+    const lastParts = (parts[3] || '').split('->');
+    content.innerHTML =
+      `<span class="power-seg">EQUAL</span>,` +
+      `<span class="power-val">${parts[1]}</span>,` +
+      `<span class="power-val">${parts[2]}</span>,` +
+      `<span class="power-val">${lastParts[0]}</span>` +
+      `<span class="power-seg">-></span>` +
+      `<span class="power-result">${lastParts[1] || ''}</span>`;
+  } else {
+    dot.className = 'power-dot err';
+    content.innerHTML = `<span class="power-err">计算失败: ${result.error}</span>`;
+  }
+}
+
+function expandPowerPanel() {
+  const body   = document.getElementById('power-body');
+  const togBtn = document.getElementById('power-toggle-btn');
+  body.style.display = '';
+  togBtn.textContent = '收起 ↑';
+}
+
+async function copyPowerConf() {
+  const result = generateEqualResult();
+  if (!result.ok) { showMessage('计算失败，无法复制', 'error'); return; }
+  await copyText(result.value);
+  showMessage('✓ power.conf 内容已复制', 'success');
+}
+
+// ── Cert Config Modal ──
+function openCertModal() {
+  document.getElementById('cfg-private-key').value = activeCerts.privateKeyPem;
+  document.getElementById('cfg-crt').value         = activeCerts.crtPem;
+  document.getElementById('cfg-root').value        = activeCerts.rootPem;
+  ['cfg-private-key-status','cfg-crt-status','cfg-root-status'].forEach(id => {
+    document.getElementById(id).textContent = '';
+    document.getElementById(id).className = 'cert-status';
+  });
+  document.getElementById('cert-modal-overlay').classList.add('open');
+}
+function closeCertModal() {
+  document.getElementById('cert-modal-overlay').classList.remove('open');
+}
+
+function validatePem(pem, type) {
+  try {
+    if (type === 'key')  { forge.pki.privateKeyFromPem(pem);  return { ok: true }; }
+    if (type === 'cert') { forge.pki.certificateFromPem(pem); return { ok: true }; }
+  } catch(e) { return { ok: false, error: e.message }; }
+  return { ok: false, error: '未知类型' };
+}
+
+function saveCertConfig() {
+  const pkPem   = document.getElementById('cfg-private-key').value.trim();
+  const crtPem  = document.getElementById('cfg-crt').value.trim();
+  const rootPem = document.getElementById('cfg-root').value.trim();
+  const pkRes   = validatePem(pkPem,   'key');
+  const crtRes  = validatePem(crtPem,  'cert');
+  const rootRes = validatePem(rootPem, 'cert');
+  const setStatus = (id, res, okMsg) => {
+    const el = document.getElementById(id);
+    el.textContent = res.ok ? okMsg : `✗ ${res.error}`;
+    el.className = 'cert-status ' + (res.ok ? 'ok' : 'err');
+  };
+  setStatus('cfg-private-key-status', pkRes,   '✓ 有效私钥');
+  setStatus('cfg-crt-status',         crtRes,  '✓ 有效证书');
+  setStatus('cfg-root-status',        rootRes, '✓ 有效证书');
+  if (!pkRes.ok || !crtRes.ok || !rootRes.ok) { showMessage('部分证书格式无效，请检查红色提示', 'error'); return; }
+  activeCerts = { privateKeyPem: pkPem, crtPem, rootPem };
+  localStorage.setItem('certConfig', JSON.stringify(activeCerts));
+  closeCertModal();
+  renderPowerPanel();
+  expandPowerPanel();
+  showMessage('✓ 证书已更新，power.conf 已重新计算', 'success');
+}
+
+function resetCertConfig() {
+  activeCerts = { privateKeyPem: DEFAULT_PRIVATE_KEY_PEM, crtPem: DEFAULT_CRT_PEM, rootPem: DEFAULT_ROOT_PEM };
+  localStorage.removeItem('certConfig');
+  document.getElementById('cfg-private-key').value = DEFAULT_PRIVATE_KEY_PEM;
+  document.getElementById('cfg-crt').value         = DEFAULT_CRT_PEM;
+  document.getElementById('cfg-root').value        = DEFAULT_ROOT_PEM;
+  ['cfg-private-key-status','cfg-crt-status','cfg-root-status'].forEach(id => {
+    document.getElementById(id).textContent = '';
+    document.getElementById(id).className = 'cert-status';
+  });
+  closeCertModal();
+  renderPowerPanel();
+  expandPowerPanel();
+  showMessage('已恢复默认证书', 'success');
+}
+
+document.getElementById('cert-modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeCertModal();
+});
+
+// Init power panel (collapsed by default)
+renderPowerPanel();
+
+function togglePowerPanel() {
+  const body   = document.getElementById('power-body');
+  const togBtn = document.getElementById('power-toggle-btn');
+  const open   = body.style.display === 'none';
+  body.style.display = open ? '' : 'none';
+  togBtn.textContent  = open ? '收起 ↑' : '展开 ↓';
+}
+
+// ── Crypto helpers ──
+function generateLicenseID() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let id = '';
+  const arr = new Uint8Array(10);
+  crypto.getRandomValues(arr);
+  for (let i = 0; i < 10; i++) id += chars[arr[i] % chars.length];
+  return id;
+}
+
+function pemToDer(pem) {
+  const b64 = pem.replace(/-----[^-]+-----/g, '').replace(/\s/g, '');
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+
+function generateLicense(licenseObj) {
+  const privateKey = forge.pki.privateKeyFromPem(activeCerts.privateKeyPem);
+  const licenseStr = JSON.stringify(licenseObj);
+  const md = forge.md.sha1.create();
+  md.update(licenseStr, 'raw');
+  const signature = privateKey.sign(md);
+  const licensePartBase64 = btoa(unescape(encodeURIComponent(licenseStr)));
+  const signatureBase64   = btoa(signature);
+  const crtDer = pemToDer(activeCerts.crtPem);
+  let crtBin = '';
+  for (let i = 0; i < crtDer.length; i++) crtBin += String.fromCharCode(crtDer[i]);
+  const crtBase64 = btoa(crtBin);
+  return `${licenseObj.licenseId}-${licensePartBase64}-${signatureBase64}-${crtBase64}`;
+}
+
+// ── Toast ──
+function showMessage(text, type = 'success', duration = 2500) {
+  const c = document.getElementById('toast-container');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `<div class="toast-dot"></div><span>${text}</span>`;
+  c.appendChild(el);
+  setTimeout(() => {
+    el.classList.add('hide');
+    el.addEventListener('transitionend', () => el.remove());
+  }, duration);
+}
+
+// ── License Modal ──
+function openModal() { document.getElementById('modal-overlay').classList.add('open'); }
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+if (localStorage.getItem('licenseInfo') === null) openModal();
+
+window.submitLicenseInfo = function () {
+  const licenseeName = document.getElementById('licenseeName').value.trim();
+  const assigneeName = document.getElementById('assigneeName').value.trim();
+  const expiryDate   = document.getElementById('expiryDate').value.trim();
+  if (!licenseeName || !assigneeName || !expiryDate) { showMessage('请填写完整信息', 'error'); return; }
+  localStorage.setItem('licenseInfo', JSON.stringify({ licenseeName, assigneeName, expiryDate }));
+  closeModal();
+  showMessage('授权信息已保存', 'success');
+};
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this && localStorage.getItem('licenseInfo') !== null) closeModal();
+});
+
+// ── Copy text ──
+async function copyText(val) {
+  if (navigator.clipboard) {
+    await navigator.clipboard.writeText(val);
+  } else {
+    const el = Object.assign(document.createElement('textarea'), { value: val, style: 'position:fixed;left:-9999px' });
+    document.body.appendChild(el); el.select(); document.execCommand('copy'); el.remove();
+  }
+}
+
+// ── Generate & copy license ──
+window.copyLicense = async function (card) {
+  while (localStorage.getItem('licenseInfo') === null) {
+    openModal();
+    await new Promise(r => setTimeout(r, 500));
+  }
+  const info   = JSON.parse(localStorage.getItem('licenseInfo'));
+  const codes  = card.dataset.productCodes.split(',');
+  const products = codes.map(code => ({ code, fallbackDate: info.expiryDate, paidUpTo: info.expiryDate, extended: false }));
+  card.style.borderColor = 'rgba(124,106,247,0.6)';
+  setTimeout(() => card.style.borderColor = '', 600);
+  try {
+    const licenseObj = {
+      licenseId: generateLicenseID(),
+      licenseeName: info.licenseeName,
+      assigneeName: info.assigneeName,
+      assigneeEmail: '',
+      licenseRestriction: '',
+      checkConcurrentUse: false,
+      products,
+      metadata: '0120230102PPAA013009',
+      hash: '41472961/0:1563609451',
+      gracePeriodDays: 7,
+      autoProlongated: true,
+      isAutoProlongated: true,
+    };
+    const licenseResult = generateLicense(licenseObj);
+    await copyText(licenseResult);
+    showMessage(`✓ ${card.dataset.product} 激活码已复制`, 'success');
+  } catch (err) {
+    console.error(err);
+    showMessage('生成失败，请检查控制台', 'error');
+  }
+};
+
+// ── Plugin helpers ──
+function buildTagHtml(pricingModel) {
+  if (!pricingModel) return '';
+  const map = { FREE: ['free','完全免费'], FREEMIUM: ['freemium','免费增值'], PAID: ['paid','完全付费'] };
+  const [cls, label] = map[pricingModel] || ['free', pricingModel];
+  return `<div class="card-tag card-tag-${cls}">${label}</div>`;
+}
+const COPY_SVG = `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16L16 8M16 8H8M16 8v8"/></svg>`;
+const state = { browse: { offset:0, total:Infinity, query:null }, search: { offset:0, total:Infinity, query:null } };
+let currentMode = 'browse';
+let isLoading   = false;
+const scrollLoader = document.getElementById('scroll-loader');
+const scrollEndTip = document.getElementById('scroll-end-tip');
+const sentinel     = document.getElementById('scroll-sentinel');
+
+function buildUrl(s) {
+  const base = 'https://plugins.jetbrains.com/api/searchPlugins?max=24&offset=' + s.offset;
+  return s.query ? base + '&search=' + encodeURIComponent(s.query) : base;
+}
+
+async function loadNextPage() {
+  const s = state[currentMode];
+  if (isLoading || s.offset >= s.total) return;
+  isLoading = true;
+  scrollLoader.classList.add('visible');
+  try {
+    const data = await fetch(buildUrl(s)).then(r => r.json());
+    s.total = data.total;
+    renderPluginCards(data.plugins || []);
+    s.offset += 24;
+    const shown = Math.min(s.offset, s.total);
+    if (currentMode === 'search') {
+      document.getElementById('plugin-count').textContent = `${shown} / ${s.total} 个结果`;
+      document.getElementById('search-status').innerHTML = `已显示 <span class="hl">${shown}</span> / <span class="hl">${s.total}</span> 条`;
+    } else {
+      document.getElementById('plugin-count').textContent = `${shown} / ${s.total}`;
+    }
+    if (s.offset >= s.total) { scrollEndTip.classList.add('visible'); observer.disconnect(); }
+  } catch(err) { showMessage('插件加载失败', 'error'); }
+  finally { isLoading = false; scrollLoader.classList.remove('visible'); }
+}
+
+const observer = new IntersectionObserver(
+  (entries) => { if (entries[0].isIntersecting) loadNextPage(); },
+  { rootMargin: '200px' }
+);
+observer.observe(sentinel);
+
+async function handlePluginClick(card, plugin) {
+  if (card.dataset.productCodes === '**') card.dataset.productCodes = plugin.id.toString();
+  copyLicense(card);
+}
+
+const searchInput  = document.getElementById('search-input');
+const searchClear  = document.getElementById('search-clear');
+const searchStatus = document.getElementById('search-status');
+searchInput.addEventListener('input', () => { searchClear.classList.toggle('visible', searchInput.value.length > 0); });
+searchInput.addEventListener('keydown', e => { if (e.key==='Enter') doSearch(); if (e.key==='Escape') clearSearch(); });
+
+async function doSearch() {
+  const q = searchInput.value.trim();
+  if (!q) { clearSearch(); return; }
+  currentMode = 'search';
+  state.search = { offset:0, total:Infinity, query:q };
+  document.getElementById('plugins-grid').innerHTML = '';
+  scrollEndTip.classList.remove('visible');
+  scrollLoader.classList.remove('visible');
+  searchStatus.innerHTML = '';
+  document.getElementById('ide-section').style.display = 'none';
+  document.getElementById('ide-separator').style.display = 'none';
+  document.getElementById('plugin-count').textContent = '搜索中...';
+  document.querySelector('.section-header .section-title').textContent = `搜索: ${q}`;
+  observer.disconnect(); observer.observe(sentinel);
+  await loadNextPage();
+  if (state.search.total === 0) {
+    searchStatus.innerHTML = `<span>未找到与 "<span class="hl">${q}</span>" 相关的插件</span>`;
+    document.getElementById('plugin-count').textContent = '无结果';
+  }
+}
+
+function clearSearch() {
+  if (currentMode === 'browse' && searchInput.value === '') return;
+  searchInput.value = ''; searchClear.classList.remove('visible'); searchStatus.innerHTML = '';
+  currentMode = 'browse'; state.browse = { offset:0, total:Infinity, query:null };
+  document.getElementById('plugins-grid').innerHTML = '';
+  document.querySelector('.section-header .section-title').textContent = 'Marketplace Plugins';
+  document.getElementById('plugin-count').textContent = 'loading...';
+  scrollEndTip.classList.remove('visible');
+  document.getElementById('ide-section').style.display = '';
+  document.getElementById('ide-separator').style.display = '';
+  observer.disconnect(); observer.observe(sentinel);
+}
+
+function renderPluginCards(plugins) {
+  const grid = document.getElementById('plugins-grid');
+  for (const plugin of plugins) {
+    const iconHtml = plugin.icon
+      ? `<img src="https://plugins.jetbrains.com${plugin.icon}" onerror="this.style.display='none';this.nextSibling.style.display='flex'" alt="" /><span class="card-icon-text" style="display:none">${(plugin.name||'').slice(0,2).toUpperCase()}</span>`
+      : `<span class="card-icon-text">${(plugin.name||'').slice(0,2).toUpperCase()}</span>`;
+    const card = document.createElement('div');
+    card.className = 'card card-plugin';
+    card.dataset.product = plugin.name;
+    card.dataset.productCodes = '**';
+    card.dataset.pluginId = plugin.id;
+    card.innerHTML = `
+      <div class="card-icon">${iconHtml}</div>
+      <div class="card-name">${plugin.name}</div>
+      <div class="card-codes">Plugin #${plugin.id}</div>
+      ${buildTagHtml(plugin.pricingModel)}
+      <div class="card-action">${COPY_SVG}</div>`;
+    card.addEventListener('click', () => handlePluginClick(card, plugin));
+    grid.appendChild(card);
+  }
+}
+</script>
+</body>
+</html>
