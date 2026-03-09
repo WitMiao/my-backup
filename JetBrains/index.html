@@ -1358,7 +1358,7 @@ observer.observe(sentinel);
 async function handlePluginClick(card, plugin) {
   if (card.dataset.productCodes === '**') {
     try {
-      const data = await fetch(`https://corsproxy.io/?url=https://plugins.jetbrains.com/api/plugins/${plugin.id}`).then(r => r.json());
+      const data = await fetch(`https://proxy.corsfix.com/?https://plugins.jetbrains.com/api/plugins/${plugin.id}`).then(r => r.json());
       const code = data.purchaseInfo && data.purchaseInfo.productCode;
       card.dataset.productCodes = code || plugin.id.toString();
     } catch(e) {
