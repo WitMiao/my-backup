@@ -3,14 +3,22 @@
 
 ```
 .
+├── JetBrains
+│   └── index.html              # JetBrains激活（纯前端实现）
+├── README.md
 ├── clash
-│   ├── clash-mihomo.yaml   # mihomo part覆写的配置文件
-│   ├── clash-script.js     # 修改自dahaha-365大佬的脚本，细微改动，修复dns泄露
-│   └── clash.js            # Clash Verge Rev 全局扩展脚本（懒人配置）/ Mihomo Party 覆写脚本
-│   └── clash.yaml          # Clash 裸核配置文件
+│   ├── Read.yaml
+│   ├── clash.js
+│   ├── config.yaml             # clash覆写配置
+│   └── rules
+│       ├── ChinaCustom.yaml    # 自定义规则
+│       ├── DNSLeak.mrs
+│       ├── DNSLeak.yaml
+│       └── GlobalCustom.yaml
 ├── mac
-│   └── install.sh
-└── README.md
+│   └── install.sh              # mac安装脚本
+└── yakit
+    └── rules去重.py             # yakit去重
 ```
 
 # MacBook 裸核教程
