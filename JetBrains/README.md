@@ -37,7 +37,6 @@ EQUAL,jetbrains.com.cn
 EQUAL,plugin.obroom.com
 ```
 
-
 `url.conf` 配置
 ```ini
 [URL]
