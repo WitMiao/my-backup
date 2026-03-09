@@ -1,25 +1,16 @@
 # 备份自用的一些配置文件
 
+- [JetBrains/index.html](JetBrains/index.html)  # JetBrains激活（纯前端实现） 
+- [clash/Read.yaml](clash/Read.yaml)    # 个人使用的配置
+- [clash/clash.js](clash/clash.js)  # clash覆写配置 
+- [clash/config.yaml](clash/config.yaml)    # clash覆写配置  
+- [clash/rules/ChinaCustom.yaml](clash/rules/ChinaCustom.yaml)  # 自定义规则  
+- [clash/rules/DNSLeak.mrs](clash/rules/DNSLeak.mrs)  
+- [clash/rules/DNSLeak.yaml](clash/rules/DNSLeak.yaml)  
+- [clash/rules/GlobalCustom.yaml](clash/rules/GlobalCustom.yaml)
+- [mac/install.sh](mac/install.sh)　# mac安装脚本
+- [yakit/rules去重.py](yakit/rules去重.py)　# yakit去重
 
-```
-.
-├── JetBrains
-│   └── index.html              # JetBrains激活（纯前端实现）
-├── README.md
-├── clash
-│   ├── Read.yaml
-│   ├── clash.js
-│   ├── config.yaml             # clash覆写配置
-│   └── rules
-│       ├── ChinaCustom.yaml    # 自定义规则
-│       ├── DNSLeak.mrs
-│       ├── DNSLeak.yaml
-│       └── GlobalCustom.yaml
-├── mac
-│   └── install.sh              # mac安装脚本
-└── yakit
-    └── rules去重.py             # yakit去重
-```
 
 # MacBook 裸核教程
 ```bash
