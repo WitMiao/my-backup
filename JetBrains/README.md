@@ -13,7 +13,7 @@
 -javaagent:/path/to/your/ja-netfilter.jar=jetbrains
 ```
 
-修改 `config` 文件夹中下面几个就行了
+修改 `config-*` 文件夹中下面几个就行了
 
 `power.conf` 配置
 
