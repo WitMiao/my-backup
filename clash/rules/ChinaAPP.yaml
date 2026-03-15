@@ -1,0 +1,25 @@
+# NAME: ChinaAPP
+# AUTHOR: Wans
+# REPO: https://github.com/wanswu/my-backup
+# DATE: 2025/09/09
+payload:
+  # MacOS 
+  - PROCESS-NAME,WeChat
+  - PROCESS-NAME,WeChatAppEx Helper
+  - PROCESS-NAME,QQ
+  - PROCESS-NAME,QQ Helper
+  - PROCESS-NAME,DingTalk
+  - PROCESS-NAME,com.apple.WebKit.Networking
+  - PROCESS-NAME,Feishu
+  - PROCESS-NAME,Lark Helper
+  - PROCESS-NAME,小米互联服务
+  # Windows
+  - PROCESS-NAME,Weixin.exe
+
+  # Android
+  - PROCESS-NAME-REGEX,com.tencent.*
+  - PROCESS-NAME-REGEX,com.xiaomi.*
+  - PROCESS-NAME-REGEX,com.alibaba.*.*
+  - PROCESS-NAME,tv.danmaku.bili
+  - PROCESS-NAME-REGEX,com.miui.*
+  - PROCESS-NAME-REGEX,com.ss.android.ugc.aweme
