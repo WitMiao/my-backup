@@ -303,7 +303,7 @@ rule-anchor:
   # 规则集锚点
   BehaviorDN: &BehaviorDN {type: http, interval: 86400, format: mrs,  behavior: domain }
   BehaviorIP: &BehaviorIP {type: http, interval: 86400, format: mrs,  behavior: ipcidr }
-  BehaviorAP: &BehaviorAP {type: http, interval: 86400, format: yaml, behavior: classical }
+  BehaviorCL: &BehaviorCL {type: http, interval: 86400, format: yaml, behavior: classical }
 
 # 规则集配置
 rule-providers:
@@ -342,7 +342,7 @@ rule-providers:
   TelegramIP:     { <<: *BehaviorIP, url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/telegram.mrs }
 
   # 应用规则集
-  ChinaAPP:       { <<: *BehaviorAP, url: https://fastly.jsdelivr.net/gh/0xWans/my-backup@main/clash/rules/ChinaAPP.yaml }
+  ChinaAPP:       { <<: *BehaviorCL, url: https://fastly.jsdelivr.net/gh/0xWans/my-backup@main/clash/rules/ChinaAPP.yaml }
 
 # 官方配置文档: https://wiki.metacubex.one/config/rules/
 rules:
