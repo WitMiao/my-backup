@@ -1,7 +1,7 @@
 # NAME: ChinaAPP
 # AUTHOR: Wans
-# REPO: https://github.com/wanswu/my-backup
-# DATE: 2025/09/09
+# REPO: https://github.com/0xWans/my-backup
+# DATE: 2026-03-16 09:57:44
 payload:
   # MacOS 
   - PROCESS-NAME,WeChat

@@ -1,7 +1,7 @@
 /**
  * 个人备份使用，该脚本适用与Mihomo Party和 Clash Verge Rev
  * Clash Verge Rev 全局扩展脚本（懒人配置）/ Mihomo Party 覆写脚本
- * URL: https://github.com/wanswu/my-backup
+ * URL: https://github.com/0xWans/my-backup
  */
 
 // 多订阅合并，这里添加额外的地址
@@ -471,13 +471,13 @@ const ruleProviders = {
   "Global": {
     ...ruleProviderCommon,
     "behavior": "classical",
-    "url": "https://cdn.jsdelivr.net/gh/wanswu/my-backup@master/clash/rule/Global.yaml",
+    "url": "https://cdn.jsdelivr.net/gh/0xWans/my-backup@master/clash/rule/Global.yaml",
     "path": "./ruleset/Global.yaml"
   },
   "ChinaCustom": {
     ...ruleProviderCommon,
     "behavior": "classical",
-    "url": "https://cdn.jsdelivr.net/gh/wanswu/my-backup@master/clash/rule/ChinaCustom.yaml",
+    "url": "https://cdn.jsdelivr.net/gh/0xWans/my-backup@master/clash/rule/ChinaCustom.yaml",
     "path": "./ruleset/ChinaCustom.yaml"
   },
 };

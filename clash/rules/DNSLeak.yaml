@@ -1,7 +1,7 @@
 # NAME: DNSLeak
 # AUTHOR: Wans
-# REPO: https://github.com/wanswu/my-backup
-# DATE: 2025/09/09
+# REPO: https://github.com/0xWans/my-backup
+# DATE: 2026-03-16 10:06:06
 payload:
   - DOMAIN-SUFFIX,checkip.dyndns.org
   - DOMAIN-SUFFIX,checkip.dyndns.com
@@ -42,3 +42,4 @@ payload:
   - DOMAIN-SUFFIX,ip111.cn
   - DOMAIN-SUFFIX,vultr.com
   - DOMAIN-SUFFIX,ping0.cc
+  - DOMAIN-SUFFIX,controld.com
