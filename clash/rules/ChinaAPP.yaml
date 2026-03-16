@@ -9,7 +9,6 @@ payload:
   - PROCESS-NAME,QQ
   - PROCESS-NAME,QQ Helper
   - PROCESS-NAME,DingTalk
-  - PROCESS-NAME,com.apple.WebKit.Networking
   - PROCESS-NAME,Feishu
   - PROCESS-NAME,Lark Helper
   - PROCESS-NAME,小米互联服务
