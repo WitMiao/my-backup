@@ -12,6 +12,8 @@ payload:
   - PROCESS-NAME,Feishu
   - PROCESS-NAME,Lark Helper
   - PROCESS-NAME,小米互联服务
+  - PROCESS-NAME,AweSun
+  - PROCESS-NAME,ToDesk
   # Windows
   - PROCESS-NAME,Weixin.exe
 
