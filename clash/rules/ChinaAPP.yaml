@@ -1,7 +1,7 @@
 # NAME: ChinaAPP
-# AUTHOR: Wans
+# AUTHOR: 0xWans
 # REPO: https://github.com/0xWans/my-backup
-# DATE: 2026-03-16 09:57:44
+# DATE: 2026-04-01 16:31:02
 payload:
   # MacOS 
   - PROCESS-NAME,WeChat
@@ -13,6 +13,7 @@ payload:
   - PROCESS-NAME,Lark Helper
   - PROCESS-NAME,小米互联服务
   - PROCESS-NAME,AweSun
+  - PROCESS-NAME,AweSun_Desktop
   - PROCESS-NAME,ToDesk
   # Windows
   - PROCESS-NAME,Weixin.exe
